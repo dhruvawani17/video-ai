@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Health Vitals Estimator</title>
+    <link rel="stylesheet" href="/static/landing.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-icon">🩺</span>
+            <span class="logo-text">Remote Vitals</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How it Works</a></li>
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#disclaimer">Disclaimer</a></li>
+        </ul>
+        <a href="/analysis" class="btn-primary">Start Analysis</a>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="rating">
+                    <span class="star">📷</span> Camera-Based <span class="rating-text">Non-invasive analysis</span>
+                </div>
+                <h1>Monitor Your Vitals with Just Your Camera</h1>
+                <p>Experience real-time estimation of heart rate, respiration, mood, and more using advanced AI vision technology—no wearables required.</p>
+                <a href="/analysis" class="btn-primary large">Start Analysis</a>
+                
+                <div class="trust-indicators">
+                    <div class="trust-text">
+                        <strong>🔒 100% Private</strong> • No video data is stored.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-images">
+                <div class="image-card main-card">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop" alt="Person at laptop">
+                    <div class="floating-badge top-right">Real-time Analysis</div>
+                    <div class="floating-tags bottom">
+                        <span class="tag">❤️ Heart Rate (rPPG)</span>
+                        <span class="tag">🫁 Respiration</span>
+                        <span class="tag">😊 Mood Analysis</span>
+                        <span class="tag">🫨 Tremor Index</span>
+                    </div>
+                </div>
+                
+                <div class="side-cards">
+                    <div class="info-card">
+                        <h3>Instant Insights</h3>
+                        <p>Get immediate feedback on your physiological state without any wearables.</p>
+                        <a href="/analysis" class="play-link">
+                            <span class="play-icon">▶</span> Try it now
+                        </a>
+                    </div>
+                    <div class="image-card small-card">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Data dashboard">
+                        <div class="floating-badge top-right">✨ AI Powered</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="therapy-session">
+            <div class="session-image">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1000&auto=format&fit=crop" alt="Medical technology">
+                <div class="tags">
+                    <span class="tag">🔍 Detect</span>
+                    <span class="tag">📊 Analyze</span>
+                </div>
+                <div class="expand-icon">↗</div>
+            </div>
+            <div class="session-content">
+                <h2>How It Works</h2>
+                <p>Simply look into your camera. Our system analyzes subtle color changes in your skin (rPPG) and body movements to estimate key health metrics in real-time.</p>
+            </div>
+        </section>
+
+        <section id="features" class="space-to-talk">
+            <div class="space-header">
+                <h2>Comprehensive Metrics.</h2>
+                <p>A holistic view of your current state, instantly.</p>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card primary-bg">
+                    <div class="stat-header">
+                        <span class="icon">⚡</span>
+                        <span class="year-badge">Real-time <span class="dots">•••</span></span>
+                    </div>
+                    <div class="stat-number">6+</div>
+                    <h3>Key Metrics Analyzed Instantly.</h3>
+                    <p>Heart rate, respiratory rate, tremor index, mood, gestures, and potential condition screening.</p>
+                    <div class="slider-controls">
+                        <span class="arrow">←</span>
+                        <div class="dots-indicator">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <span class="arrow">→</span>
+                    </div>
+                </div>
+                
+                <div id="technology" class="expert-card">
+                    <div class="expert-info">
+                        <h3>Advanced AI Vision</h3>
+                        <p>Powered by state-of-the-art facial and pose landmarks detection.</p>
+                        
+                        <div class="expert-stats">
+                            <div class="stat">
+                                <span class="plus">0</span>
+                                <span class="label">Wearables Needed</span>
+                            </div>
+                            <div class="stat">
+                                <span class="plus">100%</span>
+                                <span class="label">Non-invasive</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="expert-image">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" alt="AI Technology">
+                        <div class="expand-icon">↗</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="disclaimer" class="disclaimer-section">
+            <div class="disclaimer-content">
+                <h2>Medical Disclaimer</h2>
+                <p>This tool is for research and educational purposes only. It is not a medical device. It does not provide medical diagnosis, treatment, or advice. Always consult with a qualified healthcare professional for any medical concerns.</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

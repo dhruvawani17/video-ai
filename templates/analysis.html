@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Health Vitals Estimator — Live Analysis</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="disclaimer-banner">
+        ⚠️ DISCLAIMER: This tool is for research &amp; educational purposes only. It is NOT a medical device and does NOT provide a medical diagnosis.
+    </div>
+
+    <div class="container">
+        <header>
+            <a href="/" style="text-decoration:none;color:#007bff;font-size:0.95rem;">← Back to Home</a>
+            <h1>🩺 Remote Health Vitals Estimator</h1>
+            <p>Real-time, camera-based health metric estimation powered by AI</p>
+        </header>
+
+        <div class="main-content">
+            <!-- ── Video Feed ─────────────────────────────────────── -->
+            <div class="video-section">
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline muted></video>
+                    <canvas id="canvas" style="display:none;"></canvas>
+                </div>
+                <div class="controls">
+                    <button id="startBtn" class="btn primary">▶ Start Analysis</button>
+                    <button id="stopBtn" class="btn danger" disabled>⏹ Stop</button>
+                </div>
+                <span id="statusBadge" class="status-badge normal">Status: Ready</span>
+            </div>
+
+            <!-- ── Metric Cards ───────────────────────────────────── -->
+            <div class="metrics-section">
+                <div class="metric-card">
+                    <h3>❤️ Heart Rate</h3>
+                    <div><span class="value" id="hrValue">--</span><span class="unit"> BPM</span></div>
+                </div>
+                <div class="metric-card">
+                    <h3>🫁 Respiratory Rate</h3>
+                    <div><span class="value" id="rrValue">--</span><span class="unit"> BPM</span></div>
+                </div>
+                <div class="metric-card">
+                    <h3>🫨 Tremor Index</h3>
+                    <div><span class="value" id="tremorValue">--</span></div>
+                </div>
+                <div class="metric-card">
+                    <h3>😊 Mood</h3>
+                    <div><span class="value" id="moodValue">--</span></div>
+                </div>
+                <div class="metric-card">
+                    <h3>🤌 Gesture</h3>
+                    <div><span class="value" id="gestureValue">--</span></div>
+                </div>
+                <div class="metric-card">
+                    <h3>🎯 Confidence</h3>
+                    <div><span class="value" id="confValue">--</span><span class="unit">%</span></div>
+                </div>
+                <div class="metric-card wide-card">
+                    <h3>🔍 Detected Conditions / Symptoms</h3>
+                    <ul id="conditionsList" class="conditions-list">
+                        <li>Waiting for data…</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Heart-Rate Chart ───────────────────────────────────── -->
+        <div class="charts-section">
+            <h3>📈 Heart Rate Over Time</h3>
+            <div class="chart-container">
+                <canvas id="hrChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Summary Toast (after 60 s) ─────────────────────────────── -->
+    <div id="summaryToast" class="toast" style="display:none;">
+        <div class="toast-content">
+            <p>✅ 1 minute of data collected!</p>
+            <button id="showSummaryBtn" class="btn primary">View Summary</button>
+        </div>
+    </div>
+
+    <!-- ── Summary Modal ──────────────────────────────────────────── -->
+    <div id="summaryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>📋 Session Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <h4>Avg Heart Rate</h4>
+                    <p id="avgHr">-- BPM</p>
+                </div>
+                <div class="summary-item">
+                    <h4>Avg Respiratory Rate</h4>
+                    <p id="avgRr">-- BPM</p>
+                </div>
+                <div class="summary-item">
+                    <h4>Max Tremor Index</h4>
+                    <p id="maxTremor">--</p>
+                </div>
+                <div class="summary-item">
+                    <h4>Dominant Mood</h4>
+                    <p id="domMood">--</p>
+                </div>
+            </div>
+            <div class="summary-conditions">
+                <h4>Detected Conditions:</h4>
+                <ul id="summaryConditionsList"></ul>
+            </div>
+            <br>
+            <button id="downloadReportBtn" class="btn primary">📥 Download Report</button>
+            <p style="margin-top:15px;font-size:0.8rem;color:#999;">
+                ⚠️ This is not a medical diagnosis. Please consult a licensed healthcare professional.
+            </p>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
