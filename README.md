@@ -1,6 +1,6 @@
 # AI medical Wellness Assistnant 🩺
 
-**Wellness Assistnat** is a real-time, AI-powered Medical Wellness Video Assistant. It provides empathetic, non-diagnostic wellness insights by analyzing a user's physical, respiratory, and emotional markers through live video feed using multimodal AI models. 
+**Wellness Assistant** is a real-time, AI-powered Medical Wellness Video Assistant. It provides empathetic, non-diagnostic wellness insights by analyzing a user's physical, respiratory, and emotional markers through live video feed using multimodal AI models. 
 
 Built with **FastAPI**, **vision-agents**, and **WebSockets**, VitalsAI acts as a proactive wellness companion, capable of observing posture, estimating breathing patterns, and providing instant, conversational voice feedback.
 
