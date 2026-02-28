@@ -3,17 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Health Vitals Estimator</title>
+    <title>VitalsAI — Remote Health Vitals Estimator</title>
     <link rel="stylesheet" href="/static/landing.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Animated background -->
+    <div class="bg-grid"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+
     <nav class="navbar">
         <div class="logo">
-            <span class="logo-icon">🩺</span>
-            <span class="logo-text">Remote Vitals</span>
+            <div class="logo-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+            </div>
+            <span class="logo-text">Vitals<span class="logo-accent">AI</span></span>
         </div>
         <ul class="nav-links">
             <li><a href="#features">Features</a></li>
@@ -21,125 +31,393 @@
             <li><a href="#technology">Technology</a></li>
             <li><a href="#disclaimer">Disclaimer</a></li>
         </ul>
-        <a href="/analysis" class="btn-primary">Start Analysis</a>
+        <div class="nav-actions">
+            <a href="#" class="btn-primary" id="navStartBtn" onclick="launchAgent(event)">
+                <span>Start Analysis</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+        <button class="mobile-menu-btn" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
 
     <main>
+        <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <div class="rating">
-                    <span class="star">📷</span> Camera-Based <span class="rating-text">Non-invasive analysis</span>
+                <div class="hero-badge">
+                    <div class="badge-dot"></div>
+                    <span>Camera-Based · Non-invasive Analysis</span>
                 </div>
-                <h1>Monitor Your Vitals with Just Your Camera</h1>
-                <p>Experience real-time estimation of heart rate, respiration, mood, and more using advanced AI vision technology—no wearables required.</p>
-                <a href="/analysis" class="btn-primary large">Start Analysis</a>
-                
-                <div class="trust-indicators">
-                    <div class="trust-text">
-                        <strong>🔒 100% Private</strong> • No video data is stored.
+                <h1>Monitor Your <span class="gradient-text">Health Vitals</span> with Just a Camera</h1>
+                <p class="hero-desc">Real-time estimation of heart rate, respiration, mood, and more using advanced AI vision technology — no wearables required.</p>
+                <div class="hero-ctas">
+                    <a href="#" class="btn-primary large" id="heroStartBtn" onclick="launchAgent(event)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        <span>Start Analysis</span>
+                    </a>
+                    <a href="#how-it-works" class="btn-ghost">
+                        <span>Learn More</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    </a>
+                </div>
+                <div class="trust-row">
+                    <div class="trust-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <span>100% Private</span>
+                    </div>
+                    <div class="trust-divider"></div>
+                    <div class="trust-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>No Data Stored</span>
+                    </div>
+                    <div class="trust-divider"></div>
+                    <div class="trust-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        <span>Real-time Results</span>
                     </div>
                 </div>
             </div>
-            
-            <div class="hero-images">
-                <div class="image-card main-card">
-                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop" alt="Person at laptop">
-                    <div class="floating-badge top-right">Real-time Analysis</div>
-                    <div class="floating-tags bottom">
-                        <span class="tag">❤️ Heart Rate (rPPG)</span>
-                        <span class="tag">🫁 Respiration</span>
-                        <span class="tag">😊 Mood Analysis</span>
-                        <span class="tag">🫨 Tremor Index</span>
-                    </div>
-                </div>
-                
-                <div class="side-cards">
-                    <div class="info-card">
-                        <h3>Instant Insights</h3>
-                        <p>Get immediate feedback on your physiological state without any wearables.</p>
-                        <a href="/analysis" class="play-link">
-                            <span class="play-icon">▶</span> Try it now
-                        </a>
-                    </div>
-                    <div class="image-card small-card">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" alt="Data dashboard">
-                        <div class="floating-badge top-right">✨ AI Powered</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="how-it-works" class="therapy-session">
-            <div class="session-image">
-                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1000&auto=format&fit=crop" alt="Medical technology">
-                <div class="tags">
-                    <span class="tag">🔍 Detect</span>
-                    <span class="tag">📊 Analyze</span>
-                </div>
-                <div class="expand-icon">↗</div>
-            </div>
-            <div class="session-content">
-                <h2>How It Works</h2>
-                <p>Simply look into your camera. Our system analyzes subtle color changes in your skin (rPPG) and body movements to estimate key health metrics in real-time.</p>
-            </div>
-        </section>
-
-        <section id="features" class="space-to-talk">
-            <div class="space-header">
-                <h2>Comprehensive Metrics.</h2>
-                <p>A holistic view of your current state, instantly.</p>
-            </div>
-            
-            <div class="stats-container">
-                <div class="stat-card primary-bg">
-                    <div class="stat-header">
-                        <span class="icon">⚡</span>
-                        <span class="year-badge">Real-time <span class="dots">•••</span></span>
-                    </div>
-                    <div class="stat-number">6+</div>
-                    <h3>Key Metrics Analyzed Instantly.</h3>
-                    <p>Heart rate, respiratory rate, tremor index, mood, gestures, and potential condition screening.</p>
-                    <div class="slider-controls">
-                        <span class="arrow">←</span>
-                        <div class="dots-indicator">
-                            <span class="dot active"></span>
-                            <span class="dot"></span>
-                            <span class="dot"></span>
-                        </div>
-                        <span class="arrow">→</span>
-                    </div>
-                </div>
-                
-                <div id="technology" class="expert-card">
-                    <div class="expert-info">
-                        <h3>Advanced AI Vision</h3>
-                        <p>Powered by state-of-the-art facial and pose landmarks detection.</p>
-                        
-                        <div class="expert-stats">
-                            <div class="stat">
-                                <span class="plus">0</span>
-                                <span class="label">Wearables Needed</span>
+            <div class="hero-visual">
+                <div class="visual-card">
+                    <div class="visual-card-inner">
+                        <div class="pulse-ring"></div>
+                        <div class="visual-metrics">
+                            <div class="v-metric">
+                                <div class="v-metric-icon heart">❤️</div>
+                                <div class="v-metric-info">
+                                    <span class="v-metric-label">Heart Rate</span>
+                                    <span class="v-metric-value"><span class="counter" data-target="72">0</span> BPM</span>
+                                </div>
+                                <div class="v-metric-bar"><div class="v-bar-fill" style="width:72%"></div></div>
                             </div>
-                            <div class="stat">
-                                <span class="plus">100%</span>
-                                <span class="label">Non-invasive</span>
+                            <div class="v-metric">
+                                <div class="v-metric-icon breath">🫁</div>
+                                <div class="v-metric-info">
+                                    <span class="v-metric-label">Respiration</span>
+                                    <span class="v-metric-value"><span class="counter" data-target="16">0</span> BPM</span>
+                                </div>
+                                <div class="v-metric-bar"><div class="v-bar-fill" style="width:60%"></div></div>
+                            </div>
+                            <div class="v-metric">
+                                <div class="v-metric-icon mood">😊</div>
+                                <div class="v-metric-info">
+                                    <span class="v-metric-label">Mood</span>
+                                    <span class="v-metric-value">Relaxed</span>
+                                </div>
+                                <div class="v-metric-bar"><div class="v-bar-fill" style="width:85%"></div></div>
+                            </div>
+                            <div class="v-metric">
+                                <div class="v-metric-icon tremor">🎯</div>
+                                <div class="v-metric-info">
+                                    <span class="v-metric-label">Confidence</span>
+                                    <span class="v-metric-value"><span class="counter" data-target="94">0</span>%</span>
+                                </div>
+                                <div class="v-metric-bar"><div class="v-bar-fill" style="width:94%"></div></div>
                             </div>
                         </div>
+                        <div class="visual-card-badge">
+                            <div class="live-dot"></div>
+                            AI Analysis Preview
+                        </div>
                     </div>
-                    <div class="expert-image">
-                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000&auto=format&fit=crop" alt="AI Technology">
-                        <div class="expand-icon">↗</div>
+                </div>
+                <!-- Floating elements -->
+                <div class="float-card float-1">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    <span>Real-time ECG</span>
+                </div>
+                <div class="float-card float-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Pose Detection</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metrics Ribbon -->
+        <section class="metrics-ribbon">
+            <div class="ribbon-track">
+                <div class="ribbon-item"><span class="ribbon-number">6+</span><span class="ribbon-label">Health Metrics</span></div>
+                <div class="ribbon-divider"></div>
+                <div class="ribbon-item"><span class="ribbon-number">0</span><span class="ribbon-label">Wearables Needed</span></div>
+                <div class="ribbon-divider"></div>
+                <div class="ribbon-item"><span class="ribbon-number">100%</span><span class="ribbon-label">Non-invasive</span></div>
+                <div class="ribbon-divider"></div>
+                <div class="ribbon-item"><span class="ribbon-number">&lt;1s</span><span class="ribbon-label">Response Time</span></div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="section-header">
+                <div class="section-badge">Features</div>
+                <h2>Comprehensive Health <span class="gradient-text">Metrics</span></h2>
+                <p>A holistic view of your current physiological state, delivered instantly.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" style="--accent: #ff6b6b;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <h3>Heart Rate (rPPG)</h3>
+                    <p>Estimates heart rate by analyzing subtle skin color changes invisible to the naked eye.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--accent: #4ecdc4;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <h3>Respiratory Rate</h3>
+                    <p>Tracks chest and shoulder movements to estimate breathing frequency in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--accent: #a78bfa;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    </div>
+                    <h3>Mood Analysis</h3>
+                    <p>Detects emotional state through facial micro-expressions and body language cues.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--accent: #f59e0b;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h3>Tremor Detection</h3>
+                    <p>Identifies involuntary movements and micro-tremors through pose landmark tracking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--accent: #06b6d4;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    </div>
+                    <h3>Gesture Recognition</h3>
+                    <p>Interprets hand and body gestures for interaction and mobility assessment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="--accent: #ec4899;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <h3>Symptom Screening</h3>
+                    <p>Flags potential conditions like fatigue, stress, or posture issues for further review.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="section-header">
+                <div class="section-badge">Process</div>
+                <h2>How It <span class="gradient-text">Works</span></h2>
+                <p>Three simple steps to your wellness insights.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>Open Your Camera</h3>
+                    <p>Grant camera access and position yourself facing the screen in good lighting.</p>
+                </div>
+                <div class="step-connector">
+                    <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h36M28 4l8 8-8 8" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"/></svg>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M16.36 16.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M16.36 7.64l1.42-1.42"/></svg>
+                    </div>
+                    <h3>AI Analyzes You</h3>
+                    <p>Our AI processes video frames to detect skin color changes, pose, and facial cues.</p>
+                </div>
+                <div class="step-connector">
+                    <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h36M28 4l8 8-8 8" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"/></svg>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <h3>Get Your Report</h3>
+                    <p>Receive real-time metrics and a downloadable session summary when you're done.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Section -->
+        <section id="technology" class="technology">
+            <div class="tech-card">
+                <div class="tech-content">
+                    <div class="section-badge">Technology</div>
+                    <h2>Powered by <span class="gradient-text">Advanced AI</span></h2>
+                    <p>State-of-the-art computer vision models analyze your video feed with precision.</p>
+                    <div class="tech-stack">
+                        <div class="tech-item">
+                            <div class="tech-dot"></div>
+                            <div>
+                                <strong>YOLO Pose Estimation</strong>
+                                <span>Real-time skeletal keypoint detection</span>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-dot"></div>
+                            <div>
+                                <strong>rPPG Signal Processing</strong>
+                                <span>Heart rate from facial micro-color changes</span>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-dot"></div>
+                            <div>
+                                <strong>Gemini Multimodal AI</strong>
+                                <span>Contextual health analysis from video</span>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-dot"></div>
+                            <div>
+                                <strong>WebSocket Streaming</strong>
+                                <span>Ultra-low latency frame processing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-visual">
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="code-dot red"></span>
+                            <span class="code-dot yellow"></span>
+                            <span class="code-dot green"></span>
+                            <span class="code-title">analysis_pipeline.py</span>
+                        </div>
+                        <pre><code><span class="kw">class</span> <span class="fn">VitalsEstimator</span>:
+    <span class="kw">def</span> <span class="fn">analyze_frame</span>(self, frame):
+        pose = self.yolo.detect(frame)
+        rppg = self.extract_rppg(frame)
+        
+        <span class="kw">return</span> {
+            <span class="str">"heart_rate"</span>: rppg.bpm,
+            <span class="str">"respiratory"</span>: pose.breathing,
+            <span class="str">"tremor"</span>: pose.tremor_idx,
+            <span class="str">"mood"</span>: self.classify(frame),
+            <span class="str">"confidence"</span>: <span class="num">0.94</span>
+        }</code></pre>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Disclaimer -->
         <section id="disclaimer" class="disclaimer-section">
-            <div class="disclaimer-content">
+            <div class="disclaimer-card">
+                <div class="disclaimer-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
                 <h2>Medical Disclaimer</h2>
-                <p>This tool is for research and educational purposes only. It is not a medical device. It does not provide medical diagnosis, treatment, or advice. Always consult with a qualified healthcare professional for any medical concerns.</p>
+                <p>This tool is for <strong>research and educational purposes only</strong>. It is not a medical device. It does not provide medical diagnosis, treatment, or advice. Always consult with a qualified healthcare professional for any medical concerns. The readings provided are estimations and should not be used for clinical decision-making.</p>
             </div>
         </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <span class="logo-text">Vitals<span class="logo-accent">AI</span></span>
+                </div>
+                <p class="footer-text">AI-powered remote health vitals estimation. Built for research &amp; education.</p>
+                <div class="footer-divider"></div>
+                <p class="footer-copyright">&copy; 2026 VitalsAI. For research purposes only.</p>
+            </div>
+        </footer>
     </main>
+
+    <script>
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-target');
+                    const increment = target / 60;
+                    let current = 0;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.ceil(current);
+                        }
+                    }, 20);
+                    observer.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => observer.observe(c));
+
+        // Smooth scroll (only for real section anchors, not bare "#")
+        document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.navbar');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile menu
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileBtn.classList.toggle('active');
+            });
+        }
+
+        // ── Launch Agent & redirect to Stream meeting ───────────
+        async function launchAgent(e) {
+            e.preventDefault();
+
+            // Update button text to show loading state
+            const btn = e.currentTarget;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span>Launching Agent…</span>';
+            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.7';
+
+            try {
+                const res = await fetch('/api/agent/launch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ call_type: 'default', call_id: 'vitalsai-' + Date.now() }),
+                });
+                const data = await res.json();
+
+                if (data.join_url) {
+                    // Open meeting in a new tab, redirect this tab to the report page
+                    window.open(data.join_url, '_blank');
+                    window.location.href = '/report';
+                } else {
+                    alert('Failed to start agent: ' + (data.error || 'Unknown error'));
+                    btn.innerHTML = originalHTML;
+                    btn.style.pointerEvents = '';
+                    btn.style.opacity = '';
+                }
+            } catch (err) {
+                console.error('Launch error:', err);
+                alert('Could not connect to the server. Please make sure the server is running.');
+                btn.innerHTML = originalHTML;
+                btn.style.pointerEvents = '';
+                btn.style.opacity = '';
+            }
+        }
+    </script>
 </body>
 </html>

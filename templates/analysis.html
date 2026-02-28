@@ -3,120 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remote Health Vitals Estimator — Live Analysis</title>
+    <title>VitalsAI — Live Analysis</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
+    <!-- Animated background -->
+    <div class="bg-grid"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+
+    <!-- Disclaimer Banner -->
     <div class="disclaimer-banner">
-        ⚠️ DISCLAIMER: This tool is for research &amp; educational purposes only. It is NOT a medical device and does NOT provide a medical diagnosis.
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>Research &amp; educational purposes only — NOT a medical device or diagnosis tool.</span>
     </div>
 
     <div class="container">
-        <header>
-            <a href="/" style="text-decoration:none;color:#007bff;font-size:0.95rem;">← Back to Home</a>
-            <h1>🩺 Remote Health Vitals Estimator</h1>
-            <p>Real-time, camera-based health metric estimation powered by AI</p>
+        <!-- Header -->
+        <header class="page-header">
+            <a href="/" class="back-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Back to Home</span>
+            </a>
+            <div class="header-title">
+                <div class="logo-icon-sm">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <h1>Live <span class="gradient-text">Analysis</span></h1>
+            </div>
+            <p class="header-subtitle">Real-time, camera-based health metric estimation powered by AI</p>
         </header>
 
+        <!-- Main Content -->
         <div class="main-content">
-            <!-- ── Video Feed ─────────────────────────────────────── -->
+            <!-- Video Feed -->
             <div class="video-section">
                 <div class="video-container">
                     <video id="webcam" autoplay playsinline muted></video>
                     <canvas id="canvas" style="display:none;"></canvas>
+                    <div class="video-overlay" id="videoOverlay">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        <span>Camera feed will appear here</span>
+                    </div>
                 </div>
-                <div class="controls">
-                    <button id="startBtn" class="btn primary">▶ Start Analysis</button>
-                    <button id="stopBtn" class="btn danger" disabled>⏹ Stop</button>
+                <div class="controls-row">
+                    <div class="controls">
+                        <button id="startBtn" class="btn btn-start">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            <span>Start Analysis</span>
+                        </button>
+                        <button id="stopBtn" class="btn btn-stop" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+                            <span>Stop</span>
+                        </button>
+                        <div class="controls-divider"></div>
+                        <button id="startAgentBtn" class="btn btn-agent-start">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v4a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                            <span>Start Agent</span>
+                        </button>
+                        <button id="stopAgentBtn" class="btn btn-stop" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                            <span>Stop Agent</span>
+                        </button>
+                    </div>
+                    <div id="statusBadge" class="status-badge ready">
+                        <div class="status-dot"></div>
+                        <span>Ready</span>
+                    </div>
                 </div>
-                <span id="statusBadge" class="status-badge normal">Status: Ready</span>
+                <!-- Timer -->
+                <div class="session-timer" id="sessionTimer" style="display:none;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    <span id="timerDisplay">00:00</span>
+                </div>
+                <!-- Agent Status -->
+                <div id="agentStatus" class="agent-status-badge" style="display:none;">
+                    <div id="agentDot" class="agent-dot"></div>
+                    <span id="agentStatusText">Agent Idle</span>
+                </div>
             </div>
 
-            <!-- ── Metric Cards ───────────────────────────────────── -->
+            <!-- Agent Assessment Panel -->
+            <div id="agentAssessment" class="agent-assessment-panel" style="display:none;">
+                <div class="agent-assessment-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <h3>AI Agent Assessment</h3>
+                </div>
+                <p id="agentAssessmentText" class="agent-assessment-text"></p>
+            </div>
+
+            <!-- Metric Cards -->
             <div class="metrics-section">
                 <div class="metric-card">
-                    <h3>❤️ Heart Rate</h3>
-                    <div><span class="value" id="hrValue">--</span><span class="unit"> BPM</span></div>
+                    <div class="metric-header">
+                        <div class="metric-icon" style="--accent: #ff6b6b;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                        <span class="metric-label">Heart Rate</span>
+                    </div>
+                    <div class="metric-value-row">
+                        <span class="metric-value" id="hrValue">--</span>
+                        <span class="metric-unit">BPM</span>
+                    </div>
                 </div>
                 <div class="metric-card">
-                    <h3>🫁 Respiratory Rate</h3>
-                    <div><span class="value" id="rrValue">--</span><span class="unit"> BPM</span></div>
+                    <div class="metric-header">
+                        <div class="metric-icon" style="--accent: #4ecdc4;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <span class="metric-label">Respiratory Rate</span>
+                    </div>
+                    <div class="metric-value-row">
+                        <span class="metric-value" id="rrValue">--</span>
+                        <span class="metric-unit">BPM</span>
+                    </div>
                 </div>
                 <div class="metric-card">
-                    <h3>🫨 Tremor Index</h3>
-                    <div><span class="value" id="tremorValue">--</span></div>
+                    <div class="metric-header">
+                        <div class="metric-icon" style="--accent: #f59e0b;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <span class="metric-label">Tremor Index</span>
+                    </div>
+                    <div class="metric-value-row">
+                        <span class="metric-value" id="tremorValue">--</span>
+                    </div>
                 </div>
                 <div class="metric-card">
-                    <h3>😊 Mood</h3>
-                    <div><span class="value" id="moodValue">--</span></div>
+                    <div class="metric-header">
+                        <div class="metric-icon" style="--accent: #a78bfa;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                        </div>
+                        <span class="metric-label">Mood</span>
+                    </div>
+                    <div class="metric-value-row">
+                        <span class="metric-value text" id="moodValue">--</span>
+                    </div>
                 </div>
                 <div class="metric-card">
-                    <h3>🤌 Gesture</h3>
-                    <div><span class="value" id="gestureValue">--</span></div>
+                    <div class="metric-header">
+                        <div class="metric-icon" style="--accent: #06b6d4;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                        </div>
+                        <span class="metric-label">Gesture</span>
+                    </div>
+                    <div class="metric-value-row">
+                        <span class="metric-value text" id="gestureValue">--</span>
+                    </div>
                 </div>
                 <div class="metric-card">
-                    <h3>🎯 Confidence</h3>
-                    <div><span class="value" id="confValue">--</span><span class="unit">%</span></div>
+                    <div class="metric-header">
+                        <div class="metric-icon" style="--accent: #ec4899;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                        </div>
+                        <span class="metric-label">Confidence</span>
+                    </div>
+                    <div class="metric-value-row">
+                        <span class="metric-value" id="confValue">--</span>
+                        <span class="metric-unit">%</span>
+                    </div>
                 </div>
-                <div class="metric-card wide-card">
-                    <h3>🔍 Detected Conditions / Symptoms</h3>
+
+                <!-- Conditions Card -->
+                <div class="metric-card conditions-card">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="--accent: #6366f1;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <span class="metric-label">Detected Conditions / Symptoms</span>
+                    </div>
                     <ul id="conditionsList" class="conditions-list">
-                        <li>Waiting for data…</li>
+                        <li class="waiting">Waiting for data...</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- ── Heart-Rate Chart ───────────────────────────────────── -->
-        <div class="charts-section">
-            <h3>📈 Heart Rate Over Time</h3>
+        <!-- Heart-Rate Chart -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div class="chart-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    <h3>Heart Rate Over Time</h3>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-dot"></div>
+                    <span>BPM</span>
+                </div>
+            </div>
             <div class="chart-container">
                 <canvas id="hrChart"></canvas>
             </div>
         </div>
     </div>
 
-    <!-- ── Summary Toast (after 60 s) ─────────────────────────────── -->
+    <!-- Summary Toast -->
     <div id="summaryToast" class="toast" style="display:none;">
-        <div class="toast-content">
-            <p>✅ 1 minute of data collected!</p>
-            <button id="showSummaryBtn" class="btn primary">View Summary</button>
+        <div class="toast-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         </div>
+        <div class="toast-body">
+            <p class="toast-title">1 minute of data collected!</p>
+            <p class="toast-desc">Ready to generate your session summary.</p>
+        </div>
+        <button id="showSummaryBtn" class="btn btn-start btn-sm">View Summary</button>
     </div>
 
-    <!-- ── Summary Modal ──────────────────────────────────────────── -->
-    <div id="summaryModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>📋 Session Summary</h2>
+    <!-- Summary Modal -->
+    <div id="summaryModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close close-btn">&times;</button>
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <h2>Session <span class="gradient-text">Summary</span></h2>
+                <p>Here's a quick overview of your analysis session.</p>
+            </div>
             <div class="summary-grid">
                 <div class="summary-item">
-                    <h4>Avg Heart Rate</h4>
-                    <p id="avgHr">-- BPM</p>
+                    <span class="summary-label">Avg Heart Rate</span>
+                    <span class="summary-value" id="avgHr">-- BPM</span>
                 </div>
                 <div class="summary-item">
-                    <h4>Avg Respiratory Rate</h4>
-                    <p id="avgRr">-- BPM</p>
+                    <span class="summary-label">Avg Respiratory Rate</span>
+                    <span class="summary-value" id="avgRr">-- BPM</span>
                 </div>
                 <div class="summary-item">
-                    <h4>Max Tremor Index</h4>
-                    <p id="maxTremor">--</p>
+                    <span class="summary-label">Max Tremor Index</span>
+                    <span class="summary-value" id="maxTremor">--</span>
                 </div>
                 <div class="summary-item">
-                    <h4>Dominant Mood</h4>
-                    <p id="domMood">--</p>
+                    <span class="summary-label">Dominant Mood</span>
+                    <span class="summary-value mood" id="domMood">--</span>
                 </div>
             </div>
-            <div class="summary-conditions">
-                <h4>Detected Conditions:</h4>
+            <div class="summary-conditions-box">
+                <h4>Detected Conditions</h4>
                 <ul id="summaryConditionsList"></ul>
             </div>
-            <br>
-            <button id="downloadReportBtn" class="btn primary">📥 Download Report</button>
-            <p style="margin-top:15px;font-size:0.8rem;color:#999;">
-                ⚠️ This is not a medical diagnosis. Please consult a licensed healthcare professional.
-            </p>
+            <div class="modal-actions">
+                <button id="downloadReportBtn" class="btn btn-start">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Download PDF Report</span>
+                </button>
+                <button id="downloadTxtBtn" class="btn btn-ghost-modal">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Download as TXT</span>
+                </button>
+            </div>
+            <p class="modal-disclaimer">This is not a medical diagnosis. Please consult a licensed healthcare professional.</p>
         </div>
     </div>
 
